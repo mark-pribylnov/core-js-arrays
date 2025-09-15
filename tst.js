@@ -1,11 +1,38 @@
-function sumArrays(arr) {
-  if (arr.length === 0) return 0;
-  const sum = arr.reduce((acc, el) => {
-    const accumulator = acc;
-    return accumulator + el;
-  }, 0);
-
-  return ((sum * 10) / (arr.length * 10)).toFixed(2);
+function calculateBalance(arr) {
+  return arr
+    .map((innerArr) => {
+      return innerArr.reduce((accInner, amount) => {
+        return accInner - amount;
+      });
+    })
+    .reduce((accFinal, el) => accFinal + el);
 }
+console.log(
+  calculateBalance([
+    [10, 8],
+    [5, 1],
+  ])
+);
 
-console.log(sumArrays([2, 3, 3]));
+// 6
+
+// function sumArrays(n, size) {
+//   const arr = [];
+//   let depth = 1;
+
+//   (function dig() {
+//     if (depth === n) return;
+
+//     if (arr.length === 0) {
+//       arr.push([]);
+//       depth += 1;
+//       console.log(arr, depth);
+//     } else {
+//       // console.log(arr);
+//       arr[depth - 2].push([]);
+//       depth += 1;
+//     }
+
+//     dig();
+//   })();
+// }

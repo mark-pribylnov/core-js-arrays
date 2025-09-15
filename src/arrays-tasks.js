@@ -301,6 +301,20 @@ function distinct(arr) {
  *    createNDimensionalArray(3, 2) => [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]
  *    createNDimensionalArray(4, 2) => [[[[0, 0], [0, 0]], [[0, 0], [0, 0]]], [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]]
  *    createNDimensionalArray(1, 1) => [0]
+ *
+ *
+ *   let depth = 1;
+
+  function createArrs() {
+    if (depth === n)
+      return Array.from({ length: size }, () => new Array(size).fill(0));
+
+    depth += 1;
+    return [createArrs()];
+  }
+
+  return createArrs();
+ *
  */
 function createNDimensionalArray(/* n, size */) {
   throw new Error('Not implemented');
@@ -318,7 +332,7 @@ function createNDimensionalArray(/* n, size */) {
  *    flattenArray([1, 2, 3, 4]) => [1, 2, 3, 4]
  */
 function flattenArray(nestedArray) {
-  return nestedArray.flat();
+  return nestedArray.flat(Infinity);
 }
 
 /**
@@ -353,8 +367,14 @@ function selectMany(arr, childrenSelector) {
  *   calculateBalance([ [ 10, 8 ], [ 1, 5 ] ])  => (10 - 8) + (1 - 5) = 2 + -4 = -2
  *   calculateBalance([]) => 0
  */
-function calculateBalance(/* arr */) {
-  throw new Error('Not implemented');
+function calculateBalance(arr) {
+  return arr
+    .map((innerArr) => {
+      return innerArr.reduce((accInner, amount) => {
+        return accInner - amount;
+      });
+    })
+    .reduce((accFinal, el) => accFinal + el);
 }
 
 /**
