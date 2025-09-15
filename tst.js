@@ -1,26 +1,11 @@
-function sumArrays(arr1, arr2) {
-  let longArr = arr1;
-  let shortArr = arr2;
+function sumArrays(arr) {
+  if (arr.length === 0) return 0;
+  const sum = arr.reduce((acc, el) => {
+    const accumulator = acc;
+    return accumulator + el;
+  }, 0);
 
-  if (arr1.length === arr2.length) {
-    const arr = Array.from({ length: arr1.length }, (el, index) => {
-      return arr1[index] + arr2[index];
-    });
-
-    return arr;
-  }
-
-  longArr = arr1.length > arr2.length ? arr1 : arr2;
-  shortArr = arr1.length < arr2.length ? arr1 : arr2;
-
-  const arr = Array.from({ length: longArr.length }, (el, index) => {
-    if (Number.isInteger(longArr[index]) && Number.isInteger(shortArr[index])) {
-      return longArr[index] + shortArr[index];
-    }
-    return longArr[index];
-  });
-
-  return arr;
+  return ((sum * 10) / (arr.length * 10)).toFixed(2);
 }
 
-console.log(sumArrays([10, 20, 30], [5, 10, 15]));
+console.log(sumArrays([2, 3, 3]));
