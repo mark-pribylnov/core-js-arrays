@@ -303,18 +303,27 @@ function distinct(arr) {
  *    createNDimensionalArray(1, 1) => [0]
  *
  *
- *   let depth = 1;
-
-  function createArrs() {
-    if (depth === n)
-      return Array.from({ length: size }, () => new Array(size).fill(0));
-
-    depth += 1;
-    return [createArrs()];
+function createNDimensionalArray(n, size) {
+  if (n === 1) {
+    return new Array(size).fill(0);
   }
 
-  return createArrs();
- *
+  return Array.from({ length: size }, () =>
+    createNDimensionalArray(n - 1, size)
+  );
+
+I DON'T GET THE SOLUTION
+I DON'T GET THE SOLUTION
+I DON'T GET THE SOLUTION
+I DON'T GET THE SOLUTION
+Return to it later and maybe ask someone in person.
+I understand each individual part but the idea of a a ton of array containing each other is difficult to wrap my head around.
+It's quite a mess all these arrays like with parameter (4,2).
+
+I want to continue with other tasks to get something done and maybe, if there's spare time, we'll solve it.
+
+
+}
  */
 function createNDimensionalArray(/* n, size */) {
   throw new Error('Not implemented');
@@ -389,8 +398,22 @@ function calculateBalance(arr) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
+function createChunks(arr, chunkSize) {
+  if (chunkSize === 1) {
+    return arr.map((el) => [el]);
+  }
+
+  const numberOfChunks = Math.trunc(arr.length / chunkSize);
+
+  const newArr = Array.from({ length: numberOfChunks + 1 }, () => {
+    return Array.from({ length: chunkSize }, () => arr.shift());
+  });
+
+  const lastChunk = newArr.at(-1).filter((el) => el);
+  newArr.pop();
+  newArr.push(lastChunk);
+
+  return newArr;
 }
 
 /**

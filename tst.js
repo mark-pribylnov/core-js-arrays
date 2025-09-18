@@ -1,38 +1,28 @@
-function calculateBalance(arr) {
-  return arr
-    .map((innerArr) => {
-      return innerArr.reduce((accInner, amount) => {
-        return accInner - amount;
-      });
-    })
-    .reduce((accFinal, el) => accFinal + el);
+// const util = require('util');
+
+function createChunks(arr, chunkSize) {
+  if (chunkSize === 1) {
+    return arr.map((el) => [el]);
+  }
+
+  const numberOfChunks = Math.trunc(arr.length / chunkSize);
+
+  const newArr = Array.from({ length: numberOfChunks + 1 }, () => {
+    return Array.from({ length: chunkSize }, () => arr.shift());
+  });
+
+  const lastChunk = newArr.at(-1).filter((el) => el);
+  newArr.pop();
+  newArr.push(lastChunk);
+
+  return newArr;
 }
-console.log(
-  calculateBalance([
-    [10, 8],
-    [5, 1],
-  ])
-);
 
-// 6
+console.log(createChunks([1, 2, 3, 4, 5, 6, 7], 1));
 
-// function sumArrays(n, size) {
-//   const arr = [];
-//   let depth = 1;
-
-//   (function dig() {
-//     if (depth === n) return;
-
-//     if (arr.length === 0) {
-//       arr.push([]);
-//       depth += 1;
-//       console.log(arr, depth);
-//     } else {
-//       // console.log(arr);
-//       arr[depth - 2].push([]);
-//       depth += 1;
-//     }
-
-//     dig();
-//   })();
-// }
+// console.log(
+//   util.inspect(createNDimensionalArray(4, 2), {
+//     depth: null,
+//     maxArrayLength: null,
+//   })
+// );
