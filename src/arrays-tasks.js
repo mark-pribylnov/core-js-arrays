@@ -447,8 +447,10 @@ function generateOdds(len) {
  *   getElementByIndices(['one','two','three'], [2]) => 'three'  (arr[2])
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
  */
-function getElementByIndices(/* arr, indices */) {
-  throw new Error('Not implemented');
+function getElementByIndices(arr, indices) {
+  return indices.reduce((acc, ind) => {
+    return acc[ind];
+  }, arr);
 }
 
 /**
@@ -531,8 +533,10 @@ function getIndicesOfOddNumbers(numbers) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr.map((el) => {
+    return `#${el.toString(16).padStart(6, '0').toUpperCase()}`;
+  });
 }
 
 /**
@@ -593,8 +597,31 @@ function findCommonElements(arr1, arr2) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => longest is [3, 10] and [1, 20] => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => longest is [7, 40, 80] => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  const sequences = [];
+
+  sequences.push(
+    nums.reduce((acc, el, ind) => {
+      if (ind === 0) {
+        acc.push(el);
+        return acc;
+      }
+      if (acc.at(-1) < el) {
+        acc.push(el);
+        return acc;
+      }
+      sequences.push(acc.slice());
+      acc.length = 0;
+      acc.push(el);
+
+      return acc;
+    }, [])
+  );
+
+  return sequences.reduce((acc, el) => {
+    if (acc.length < el.length) return el;
+    return acc;
+  }).length;
 }
 
 /**
