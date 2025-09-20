@@ -1,33 +1,47 @@
 // const util = require('util');
 
 function getMaxItems(arr) {
-  const sequences = [];
+  let middleIndex = null;
 
-  sequences.push(
-    arr.reduce((acc, el, ind) => {
-      if (ind === 0) {
-        acc.push(el);
-        return acc;
-      }
-      if (acc.at(-1) < el) {
-        acc.push(el);
-        return acc;
-      }
-      sequences.push(acc.slice());
-      acc.length = 0;
-      acc.push(el);
+  switch (arr.length) {
+    case 0:
+      return arr;
+    case 1:
+      return arr;
+    case 2:
+      arr.push(arr.shift());
+      return arr;
+    default:
+      break;
+  }
 
-      return acc;
-    }, [])
-  );
+  if (!arr.length % 2) {
+    middleIndex = Math.trunc(arr.length / 2);
+    const tail = arr.splice(middleIndex + 1, middleIndex);
+    const head = arr.splice(0, middleIndex);
 
-  return sequences.reduce((acc, el) => {
-    if (acc.length < el.length) return el;
-    return acc;
-  });
+    arr.unshift(tail);
+    arr.push(head);
+
+    return arr.flat();
+  }
+  middleIndex = Math.trunc(arr.length / 2);
+  // console.log(arr[middleIndex]);
+
+  const tail =
+    arr.length === 4 ? arr.splice(middleIndex) : arr.splice(middleIndex + 1);
+  const head = arr.splice(0, middleIndex);
+
+  console.log(tail);
+  console.log(head);
+
+  arr.unshift(tail);
+  arr.push(head);
+
+  return arr.flat();
 }
 
-console.log(getMaxItems([10, 22, 9, 33, 21, 50, 41, 60, 80]));
+console.log(getMaxItems([1, 2, 3, 4]));
 
 // 41,60,80
 
